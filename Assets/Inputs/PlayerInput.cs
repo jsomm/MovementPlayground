@@ -137,14 +137,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """"
-                },
-                {
-                    ""name"": ""MouseLook"",
-                    ""type"": ""Value"",
-                    ""id"": ""1b45dfc1-2bf6-458f-961e-a78343913a56"",
-                    ""expectedControlType"": ""Vector3"",
-                    ""processors"": """",
-                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -156,17 +148,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""processors"": ""Normalize(min=-1,max=1),Invert"",
                     ""groups"": """",
                     ""action"": ""Zoom"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fcfd0ace-3006-4c7a-a55a-885fd1c8d6b5"",
-                    ""path"": ""<Mouse>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MouseLook"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -182,7 +163,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         // MouseCameraControls
         m_MouseCameraControls = asset.FindActionMap("MouseCameraControls", throwIfNotFound: true);
         m_MouseCameraControls_Zoom = m_MouseCameraControls.FindAction("Zoom", throwIfNotFound: true);
-        m_MouseCameraControls_MouseLook = m_MouseCameraControls.FindAction("MouseLook", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -274,13 +254,11 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputActionMap m_MouseCameraControls;
     private IMouseCameraControlsActions m_MouseCameraControlsActionsCallbackInterface;
     private readonly InputAction m_MouseCameraControls_Zoom;
-    private readonly InputAction m_MouseCameraControls_MouseLook;
     public struct MouseCameraControlsActions
     {
         private @PlayerInput m_Wrapper;
         public MouseCameraControlsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Zoom => m_Wrapper.m_MouseCameraControls_Zoom;
-        public InputAction @MouseLook => m_Wrapper.m_MouseCameraControls_MouseLook;
         public InputActionMap Get() { return m_Wrapper.m_MouseCameraControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -293,9 +271,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Zoom.started -= m_Wrapper.m_MouseCameraControlsActionsCallbackInterface.OnZoom;
                 @Zoom.performed -= m_Wrapper.m_MouseCameraControlsActionsCallbackInterface.OnZoom;
                 @Zoom.canceled -= m_Wrapper.m_MouseCameraControlsActionsCallbackInterface.OnZoom;
-                @MouseLook.started -= m_Wrapper.m_MouseCameraControlsActionsCallbackInterface.OnMouseLook;
-                @MouseLook.performed -= m_Wrapper.m_MouseCameraControlsActionsCallbackInterface.OnMouseLook;
-                @MouseLook.canceled -= m_Wrapper.m_MouseCameraControlsActionsCallbackInterface.OnMouseLook;
             }
             m_Wrapper.m_MouseCameraControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -303,9 +278,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Zoom.started += instance.OnZoom;
                 @Zoom.performed += instance.OnZoom;
                 @Zoom.canceled += instance.OnZoom;
-                @MouseLook.started += instance.OnMouseLook;
-                @MouseLook.performed += instance.OnMouseLook;
-                @MouseLook.canceled += instance.OnMouseLook;
             }
         }
     }
@@ -318,6 +290,5 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     public interface IMouseCameraControlsActions
     {
         void OnZoom(InputAction.CallbackContext context);
-        void OnMouseLook(InputAction.CallbackContext context);
     }
 }

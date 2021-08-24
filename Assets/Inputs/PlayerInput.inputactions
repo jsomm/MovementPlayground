@@ -124,14 +124,6 @@
                     "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": ""
-                },
-                {
-                    "name": "MouseLook",
-                    "type": "Value",
-                    "id": "1b45dfc1-2bf6-458f-961e-a78343913a56",
-                    "expectedControlType": "Vector3",
-                    "processors": "",
-                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -143,17 +135,6 @@
                     "processors": "Normalize(min=-1,max=1),Invert",
                     "groups": "",
                     "action": "Zoom",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fcfd0ace-3006-4c7a-a55a-885fd1c8d6b5",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MouseLook",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
