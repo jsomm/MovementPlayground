@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MouseAimManager : MonoBehaviour
+public class CameraMouseFollower : MonoBehaviour
 {
     [SerializeField] LayerMask groundMask;
     [SerializeField] Transform playerTransform;
