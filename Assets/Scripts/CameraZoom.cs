@@ -21,9 +21,7 @@ public class CameraZoom : MonoBehaviour
 
         float z = InputProvider.GetAxisValue(2);
         if (z != 0)
-        {
             ZoomScreen(z);
-        }
     }
 
     public void ZoomScreen(float increment)
