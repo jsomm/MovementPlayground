@@ -44,6 +44,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "FlipCards",
+                    "type": "Button",
+                    "id": "804831ba-b870-44e3-9d37-3e61ff7ef2af",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -165,6 +173,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "AbilityThree",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9ef06467-50dc-482b-8139-61a8ddf5a847",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FlipCards",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
