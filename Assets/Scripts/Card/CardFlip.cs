@@ -26,6 +26,12 @@ namespace MovementPlayground.Card
                 StartCoroutine(RotateCard());
         }
 
+        public void DrawFlip()
+        {
+            if (_coroutineAllowed)
+                StartCoroutine(RotateCard());
+        }
+
         private void OnEnable()
         {
             _playerInput.CharacterControls.Enable();
@@ -39,7 +45,7 @@ namespace MovementPlayground.Card
         private void Start()
         {
             _coroutineAllowed = true;
-            _isFaceUp = true;
+            _isFaceUp = false;
         }
 
         private IEnumerator RotateCard()

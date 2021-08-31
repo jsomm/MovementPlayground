@@ -11,7 +11,13 @@ namespace MovementPlayground.Card
         public TMP_Text TitleText, DescriptionText, ResourceCost;
         public Image CardArt;
 
-        public void DisplayCard()
+        public void SetCard(Card cardData)
+        {
+            Card = cardData;
+            DisplayCard();
+        }
+
+        private void DisplayCard()
         {
             TitleText.text = Card.Title;
             DescriptionText.text = Card.DescriptionText;

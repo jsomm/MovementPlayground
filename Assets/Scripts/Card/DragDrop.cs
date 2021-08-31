@@ -9,7 +9,7 @@ namespace MovementPlayground.Card
         CanvasGroup _canvasGroup;
         RectTransform _rectTransform;
         public Vector2 StartPos;
-        public bool DroppedOnSlot;
+        public bool DroppedOnSlot, AllowDragging;
         public GameObject CurrentSlot, SlotAtStartOfDrag;
 
         private void Awake()
@@ -18,6 +18,7 @@ namespace MovementPlayground.Card
             _canvasGroup = GetComponent<CanvasGroup>();
             _rectTransform = GetComponent<RectTransform>();
             StartPos = transform.position;
+            AllowDragging = false;
         }
         private void Start()
         {
@@ -30,24 +31,31 @@ namespace MovementPlayground.Card
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            eventData.pointerDrag.GetComponent<DragDrop>().DroppedOnSlot = false;
-            _canvasGroup.blocksRaycasts = false;
-            if(CurrentSlot != null)
-                SlotAtStartOfDrag = CurrentSlot;
+            if (AllowDragging)
+            {
+                eventData.pointerDrag.GetComponent<DragDrop>().DroppedOnSlot = false;
+                _canvasGroup.blocksRaycasts = false;
+                if (CurrentSlot != null)
+                    SlotAtStartOfDrag = CurrentSlot;
+            }
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            _canvasGroup.blocksRaycasts = true;
-            if (DroppedOnSlot == false)
+            if (AllowDragging)
             {
-                transform.position = StartPos;
+                _canvasGroup.blocksRaycasts = true;
+                if (DroppedOnSlot == false)
+                {
+                    transform.position = StartPos;
+                }
             }
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            _rectTransform.anchoredPosition += eventData.delta / _canvas.scaleFactor;
+            if (AllowDragging)            
+                _rectTransform.anchoredPosition += eventData.delta / _canvas.scaleFactor;
         }
     }
 }

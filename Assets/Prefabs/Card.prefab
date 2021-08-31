@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &675023561387135737
 RectTransform:
   m_ObjectHideFlags: 0
@@ -53,7 +53,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6933070805035447439
 RectTransform:
   m_ObjectHideFlags: 0
@@ -166,6 +166,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartPos: {x: 0, y: 0}
   DroppedOnSlot: 0
+  AllowDragging: 0
+  CurrentSlot: {fileID: 0}
+  SlotAtStartOfDrag: {fileID: 0}
 --- !u!225 &2995023938930473327
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -190,8 +193,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66d5c612476b2324aaea5fab8508ae4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CardFront: {fileID: 5297660377218800032}
-  CardBack: {fileID: 6570992594653900116}
+  _cardFront: {fileID: 5297660377218800032}
+  _cardBack: {fileID: 6570992594653900116}
 --- !u!114 &5228923235868994030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec7ab1126fe9a141a0a8255dfaacc2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 0}
+  Card: {fileID: 0}
   TitleText: {fileID: 8024851784014845842}
   DescriptionText: {fileID: 8024851784244051265}
   ResourceCost: {fileID: 8024851785683574035}

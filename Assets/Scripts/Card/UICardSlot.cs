@@ -11,15 +11,18 @@ namespace MovementPlayground.Card
             if (eventData.pointerDrag != null)
             {
                 DragDrop itemBeingDropped = eventData.pointerDrag.GetComponent<DragDrop>();
-                itemBeingDropped.DroppedOnSlot = true;
-                itemBeingDropped.CurrentSlot = gameObject;
-                itemBeingDropped.StartPos = transform.position;
-                eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
+                if (itemBeingDropped.AllowDragging)
+                {
+                    itemBeingDropped.DroppedOnSlot = true;
+                    itemBeingDropped.CurrentSlot = gameObject;
+                    itemBeingDropped.StartPos = transform.position;
+                    eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
 
-                if(itemBeingDropped.SlotAtStartOfDrag != null)
-                    itemBeingDropped.SlotAtStartOfDrag.GetComponent<UICardSlot>().IsOccupied = false;
+                    if (itemBeingDropped.SlotAtStartOfDrag != null)
+                        itemBeingDropped.SlotAtStartOfDrag.GetComponent<UICardSlot>().IsOccupied = false;
 
-                IsOccupied = true;
+                    IsOccupied = true;
+                }
             }
         }
     }
