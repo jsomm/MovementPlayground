@@ -30,7 +30,7 @@ namespace MovementPlayground.Card
 
                 // feed card data to the display fields
                 CardDisplay display = newCard.GetComponent<CardDisplay>();
-                display.card = cardToAdd;
+                display.Card = cardToAdd;
                 display.DisplayCard();
                 return true;
             }

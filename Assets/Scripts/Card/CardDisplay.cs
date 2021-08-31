@@ -6,21 +6,20 @@ namespace MovementPlayground.Card
 {
     public class CardDisplay : MonoBehaviour
     {
-        public Card card;
+        public Card Card;
 
         public TMP_Text TitleText, DescriptionText, ResourceCost;
         public Image CardArt;
 
         public void DisplayCard()
         {
-            TitleText.text = card.Title;
-            DescriptionText.text = card.DescriptionText;
-            ResourceCost.text = card.Cost.ToString();
-            if (card.CardArt != null)
-                CardArt.sprite = card.CardArt;
+            TitleText.text = Card.Title;
+            DescriptionText.text = Card.DescriptionText;
+            ResourceCost.text = Card.Cost.ToString();
+            if (Card.CardArt != null)
+                CardArt.sprite = Card.CardArt;
             else
                 CardArt.gameObject.SetActive(false);
         }
-
     }
 }

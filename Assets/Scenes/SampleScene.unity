@@ -245,9 +245,9 @@ RectTransform:
   m_Father: {fileID: 1944301621}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 316}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &274578307
@@ -1055,7 +1055,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Deck: []
-  playerHand: {fileID: 274578307}
+  _playerHand: {fileID: 274578307}
 --- !u!1 &1233226693
 GameObject:
   m_ObjectHideFlags: 0
@@ -1152,9 +1152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1021a32af3808741a435af66d751800, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ZoomSpeed: 3
-  ZoomInMax: 35
-  ZoomOutMax: 75
+  _zoomSpeed: 3
+  _zoomInMax: 35
+  _zoomOutMax: 75
 --- !u!1 &1443509138
 GameObject:
   m_ObjectHideFlags: 0

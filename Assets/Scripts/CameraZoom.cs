@@ -3,32 +3,32 @@ using Cinemachine;
 
 public class CameraZoom : MonoBehaviour
 {
-    [SerializeField] private float ZoomSpeed = 3f;
-    [SerializeField] private float ZoomInMax = 35f;
-    [SerializeField] private float ZoomOutMax = 75f;
+    [SerializeField] private float _zoomSpeed = 3f;
+    [SerializeField] private float _zoomInMax = 35f;
+    [SerializeField] private float _zoomOutMax = 75f;
 
-    private CinemachineInputProvider InputProvider;
-    private CinemachineVirtualCamera VirtualCamera;
+    private CinemachineInputProvider _inputProvider;
+    private CinemachineVirtualCamera _virtualCamera;
 
     private void Awake()
     {
-        InputProvider = GetComponent<CinemachineInputProvider>();
-        VirtualCamera = GetComponent<CinemachineVirtualCamera>();
+        _inputProvider = GetComponent<CinemachineInputProvider>();
+        _virtualCamera = GetComponent<CinemachineVirtualCamera>();
     }
 
     void Update()
     {
 
-        float z = InputProvider.GetAxisValue(2);
+        float z = _inputProvider.GetAxisValue(2);
         if (z != 0)
             ZoomScreen(z);
     }
 
     public void ZoomScreen(float increment)
     {
-        float fov = VirtualCamera.m_Lens.FieldOfView;
-        float target = Mathf.Clamp(fov + increment, ZoomInMax, ZoomOutMax);
+        float fov = _virtualCamera.m_Lens.FieldOfView;
+        float target = Mathf.Clamp(fov + increment, _zoomInMax, _zoomOutMax);
 
-        VirtualCamera.m_Lens.FieldOfView = Mathf.MoveTowards(fov, target, ZoomSpeed);
+        _virtualCamera.m_Lens.FieldOfView = Mathf.MoveTowards(fov, target, _zoomSpeed);
     }
 }

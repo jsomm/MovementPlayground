@@ -8,54 +8,55 @@ namespace MovementPlayground.Card
     public class CardFlip : MonoBehaviour
     {
         [SerializeField]
-        private GameObject CardFront, CardBack;
+        private GameObject _cardFront, _cardBack;
 
-        PlayerInput playerInput;
+        PlayerInput _playerInput;
 
-        bool coroutineAllowed, isFaceUp;
+        bool _coroutineAllowed, _isFaceUp;
 
         private void Awake()
         {
-            playerInput = new PlayerInput();
-            playerInput.CharacterControls.FlipCards.performed += StartCardFlip;
+            _playerInput = new PlayerInput();
+            _playerInput.CharacterControls.FlipCards.performed += StartCardFlip;
         }
 
         private void StartCardFlip(InputAction.CallbackContext obj)
         {
-            if (coroutineAllowed)
+            if (_coroutineAllowed)
                 StartCoroutine(RotateCard());
         }
 
         private void OnEnable()
         {
-            playerInput.CharacterControls.Enable();
+            _playerInput.CharacterControls.Enable();
         }
 
         private void OnDisable()
         {
-            playerInput.CharacterControls.Disable();
+            _playerInput.CharacterControls.Disable();
         }
 
         private void Start()
         {
-            coroutineAllowed = true;
-            isFaceUp = true;
+            _coroutineAllowed = true;
+            _isFaceUp = true;
         }
 
         private IEnumerator RotateCard()
         {
-            coroutineAllowed = false;
+            _coroutineAllowed = false;
 
-            if (!isFaceUp)
+            if (!_isFaceUp)
             {
                 for (float i = 180f; i >= 0f; i -= 10f)
                 {
                     transform.rotation = Quaternion.Euler(0f, i, 0f);
                     if (i == 90f)
                     {
-                        CardFront.SetActive(true);
-                        CardBack.SetActive(false);
+                        _cardFront.SetActive(true);
+                        _cardBack.SetActive(false);
                     }
+
                     yield return new WaitForSeconds(0.01f);
                 }
             }
@@ -66,15 +67,16 @@ namespace MovementPlayground.Card
                     transform.rotation = Quaternion.Euler(0f, i, 0f);
                     if (i == 90f)
                     {
-                        CardFront.SetActive(false);
-                        CardBack.SetActive(true);
+                        _cardFront.SetActive(false);
+                        _cardBack.SetActive(true);
                     }
+
                     yield return new WaitForSeconds(0.01f);
                 }
             }
 
-            coroutineAllowed = true;
-            isFaceUp = !isFaceUp;
+            _coroutineAllowed = true;
+            _isFaceUp = !_isFaceUp;
         }
     }
 }

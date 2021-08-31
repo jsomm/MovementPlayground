@@ -9,7 +9,7 @@ namespace MovementPlayground.Card
     {
         public List<Card> Deck;
 
-        [SerializeField] PlayerHandManager playerHand;
+        [SerializeField] PlayerHandManager _playerHand;
 
         private void Start()
         {
@@ -50,12 +50,11 @@ namespace MovementPlayground.Card
             int cardsActuallyDrawn(int cardsRequested) => cardsRequested > Deck.Count ? Deck.Count : cardsRequested; 
             for (int i = 0; i < cardsActuallyDrawn(numberOfCardsToDraw); i++)
             {
-                if (playerHand.AddCardToHand(Deck[0]))
+                if (_playerHand.AddCardToHand(Deck[0]))
                     Deck.RemoveAt(0);
                 else
                     break; // we've run out of room in the hand
             }
-            
         }
     }
 }

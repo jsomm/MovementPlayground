@@ -7,106 +7,104 @@ using UnityEngine.InputSystem;
 public class PlayerAnimationAndMovementController : MonoBehaviour
 {
     // references
-    PlayerInput playerInput;
-    CharacterController characterController;
-    Animator animator;
+    PlayerInput _playerInput;
+    CharacterController _characterController;
+    Animator _animator;
 
     // hashes for animator values
-    int isWalkingHash, isRunningHash;
+    int _isWalkingHash, _isRunningHash;
 
     // variables to store player input values
-    Vector2 currentMovementInput;
-    Vector3 currentMovement;
-    Vector3 currentRunMovement;
+    Vector2 _currentMovementInput;
+    Vector3 _currentMovement, _currentRunMovement;
 
     // visible in inspector
     public float MoveSpeed = 1.5f;
     public float RunSpeed = 3f;
 
     // private
-    bool isMovementPressed;
-    bool isRunPressed;
-    float rotationFactorPerFrame = 15f;
+    bool _isMovementPressed;
+    bool _isRunPressed;
+    readonly float _rotationFactorPerFrame = 15f;
 
     private void Awake()
     {
-        playerInput = new PlayerInput();
-        characterController = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
+        _playerInput = new PlayerInput();
+        _characterController = GetComponent<CharacterController>();
+        _animator = GetComponent<Animator>();
 
-        isWalkingHash = Animator.StringToHash("isWalking");
-        isRunningHash = Animator.StringToHash("isRunning");
+        _isWalkingHash = Animator.StringToHash("isWalking");
+        _isRunningHash = Animator.StringToHash("isRunning");
 
-        playerInput.CharacterControls.Move.started += OnMovementInput;
-        playerInput.CharacterControls.Move.canceled += OnMovementInput;
-        playerInput.CharacterControls.Move.performed += OnMovementInput;
+        _playerInput.CharacterControls.Move.started += OnMovementInput;
+        _playerInput.CharacterControls.Move.canceled += OnMovementInput;
+        _playerInput.CharacterControls.Move.performed += OnMovementInput;
 
-        playerInput.CharacterControls.Run.started += OnRun;
-        playerInput.CharacterControls.Run.canceled += OnRun;
+        _playerInput.CharacterControls.Run.started += OnRun;
+        _playerInput.CharacterControls.Run.canceled += OnRun;
     }
 
     private void OnRun(InputAction.CallbackContext context)
     {
-        isRunPressed = context.ReadValueAsButton();
+        _isRunPressed = context.ReadValueAsButton();
     }
 
     private void OnMovementInput(InputAction.CallbackContext context)
     {
-        currentMovementInput = context.ReadValue<Vector2>();
-        currentMovement.x = currentMovementInput.x * MoveSpeed;
-        currentMovement.z = currentMovementInput.y * MoveSpeed;
-        currentRunMovement.x = currentMovementInput.x * RunSpeed;
-        currentRunMovement.z = currentMovementInput.y * RunSpeed;
-        isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
+        _currentMovementInput = context.ReadValue<Vector2>();
+        _currentMovement.x = _currentMovementInput.x * MoveSpeed;
+        _currentMovement.z = _currentMovementInput.y * MoveSpeed;
+        _currentRunMovement.x = _currentMovementInput.x * RunSpeed;
+        _currentRunMovement.z = _currentMovementInput.y * RunSpeed;
+        _isMovementPressed = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
     }
 
     private void HandleRotation()
     {
         Vector3 positionToLookAt;
 
-        positionToLookAt.x = currentMovement.x;
+        positionToLookAt.x = _currentMovement.x;
         positionToLookAt.y = 0.0f;
-        positionToLookAt.z = currentMovement.z;
+        positionToLookAt.z = _currentMovement.z;
 
         Quaternion currentRotation = transform.rotation;
 
-        if (isMovementPressed)
+        if (_isMovementPressed)
         {
             Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
-            transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, _rotationFactorPerFrame * Time.deltaTime);
         }
-
     }
 
     private void HandleAnimation()
     {
-        bool isWalking = animator.GetBool(isWalkingHash);
-        bool isRunning = animator.GetBool(isRunningHash);
+        bool isWalking = _animator.GetBool(_isWalkingHash);
+        bool isRunning = _animator.GetBool(_isRunningHash);
 
-        if(isMovementPressed && !isWalking)        
-            animator.SetBool(isWalkingHash, true);
-        else if(!isMovementPressed && isWalking)
-            animator.SetBool(isWalkingHash, false);
+        if(_isMovementPressed && !isWalking)        
+            _animator.SetBool(_isWalkingHash, true);
+        else if(!_isMovementPressed && isWalking)
+            _animator.SetBool(_isWalkingHash, false);
 
-        if (isMovementPressed && isRunPressed && !isRunning)
-            animator.SetBool(isRunningHash, true);
-        else if ((!isMovementPressed || !isRunPressed) && isRunning)
-            animator.SetBool(isRunningHash, false);
+        if (_isMovementPressed && _isRunPressed && !isRunning)
+            _animator.SetBool(_isRunningHash, true);
+        else if ((!_isMovementPressed || !_isRunPressed) && isRunning)
+            _animator.SetBool(_isRunningHash, false);
     }
 
     private void HandleGravity()
     {
-        if (characterController.isGrounded)
+        if (_characterController.isGrounded)
         {
             float groundedGravity = -0.05f;
-            currentMovement.y = groundedGravity;
-            currentRunMovement.y = groundedGravity;
+            _currentMovement.y = groundedGravity;
+            _currentRunMovement.y = groundedGravity;
         }
         else
         {
             float gravity = -9.8f;
-            currentMovement.y += gravity;
-            currentRunMovement.y += gravity;
+            _currentMovement.y += gravity;
+            _currentRunMovement.y += gravity;
         }
     }
 
@@ -115,19 +113,19 @@ public class PlayerAnimationAndMovementController : MonoBehaviour
         HandleGravity();
         HandleRotation();
         HandleAnimation();
-        if(isRunPressed)
-            characterController.Move(currentRunMovement * Time.deltaTime);
+        if(_isRunPressed)
+            _characterController.Move(_currentRunMovement * Time.deltaTime);
         else
-            characterController.Move(currentMovement * Time.deltaTime);
+            _characterController.Move(_currentMovement * Time.deltaTime);
     }
 
     private void OnEnable()
     {
-        playerInput.CharacterControls.Enable();
+        _playerInput.CharacterControls.Enable();
     }
 
     private void OnDisable()
     {
-        playerInput.CharacterControls.Disable();
+        _playerInput.CharacterControls.Disable();
     }
 }

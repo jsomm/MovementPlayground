@@ -5,18 +5,18 @@ namespace MovementPlayground.Card
 {
     public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
-        Canvas canvas;
-        CanvasGroup canvasGroup;
-        RectTransform rectTransform;
+        Canvas _canvas;
+        CanvasGroup _canvasGroup;
+        RectTransform _rectTransform;
         public Vector2 StartPos;
         public bool DroppedOnSlot;
         public GameObject CurrentSlot, SlotAtStartOfDrag;
 
         private void Awake()
         {
-            canvas = GetComponentInParent<Canvas>();
-            canvasGroup = GetComponent<CanvasGroup>();
-            rectTransform = GetComponent<RectTransform>();
+            _canvas = GetComponentInParent<Canvas>();
+            _canvasGroup = GetComponent<CanvasGroup>();
+            _rectTransform = GetComponent<RectTransform>();
             StartPos = transform.position;
         }
         private void Start()
@@ -31,14 +31,14 @@ namespace MovementPlayground.Card
         public void OnBeginDrag(PointerEventData eventData)
         {
             eventData.pointerDrag.GetComponent<DragDrop>().DroppedOnSlot = false;
-            canvasGroup.blocksRaycasts = false;
+            _canvasGroup.blocksRaycasts = false;
             if(CurrentSlot != null)
                 SlotAtStartOfDrag = CurrentSlot;
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            canvasGroup.blocksRaycasts = true;
+            _canvasGroup.blocksRaycasts = true;
             if (DroppedOnSlot == false)
             {
                 transform.position = StartPos;
@@ -47,7 +47,7 @@ namespace MovementPlayground.Card
 
         public void OnDrag(PointerEventData eventData)
         {
-            rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+            _rectTransform.anchoredPosition += eventData.delta / _canvas.scaleFactor;
         }
     }
 }
