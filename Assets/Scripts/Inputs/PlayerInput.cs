@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Inputs/PlayerInput.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/Inputs/PlayerInput.inputactions'
 
 using System;
 using System.Collections;
@@ -59,9 +59,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""FlipCards"",
+                    ""name"": ""AbilityFour"",
                     ""type"": ""Button"",
-                    ""id"": ""804831ba-b870-44e3-9d37-3e61ff7ef2af"",
+                    ""id"": ""c719b912-71da-43d6-ba66-d848c93a08fd"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -191,12 +191,12 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9ef06467-50dc-482b-8139-61a8ddf5a847"",
-                    ""path"": ""<Keyboard>/r"",
+                    ""id"": ""9e25f689-fa19-4858-96a2-6289a4bfa84c"",
+                    ""path"": ""<Keyboard>/4"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""FlipCards"",
+                    ""action"": ""AbilityFour"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -239,7 +239,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_CharacterControls_AbilityOne = m_CharacterControls.FindAction("AbilityOne", throwIfNotFound: true);
         m_CharacterControls_AbilityTwo = m_CharacterControls.FindAction("AbilityTwo", throwIfNotFound: true);
         m_CharacterControls_AbilityThree = m_CharacterControls.FindAction("AbilityThree", throwIfNotFound: true);
-        m_CharacterControls_FlipCards = m_CharacterControls.FindAction("FlipCards", throwIfNotFound: true);
+        m_CharacterControls_AbilityFour = m_CharacterControls.FindAction("AbilityFour", throwIfNotFound: true);
         // MouseCameraControls
         m_MouseCameraControls = asset.FindActionMap("MouseCameraControls", throwIfNotFound: true);
         m_MouseCameraControls_Zoom = m_MouseCameraControls.FindAction("Zoom", throwIfNotFound: true);
@@ -297,7 +297,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_CharacterControls_AbilityOne;
     private readonly InputAction m_CharacterControls_AbilityTwo;
     private readonly InputAction m_CharacterControls_AbilityThree;
-    private readonly InputAction m_CharacterControls_FlipCards;
+    private readonly InputAction m_CharacterControls_AbilityFour;
     public struct CharacterControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -307,7 +307,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @AbilityOne => m_Wrapper.m_CharacterControls_AbilityOne;
         public InputAction @AbilityTwo => m_Wrapper.m_CharacterControls_AbilityTwo;
         public InputAction @AbilityThree => m_Wrapper.m_CharacterControls_AbilityThree;
-        public InputAction @FlipCards => m_Wrapper.m_CharacterControls_FlipCards;
+        public InputAction @AbilityFour => m_Wrapper.m_CharacterControls_AbilityFour;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -332,9 +332,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @AbilityThree.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnAbilityThree;
                 @AbilityThree.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnAbilityThree;
                 @AbilityThree.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnAbilityThree;
-                @FlipCards.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnFlipCards;
-                @FlipCards.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnFlipCards;
-                @FlipCards.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnFlipCards;
+                @AbilityFour.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnAbilityFour;
+                @AbilityFour.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnAbilityFour;
+                @AbilityFour.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnAbilityFour;
             }
             m_Wrapper.m_CharacterControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -354,9 +354,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @AbilityThree.started += instance.OnAbilityThree;
                 @AbilityThree.performed += instance.OnAbilityThree;
                 @AbilityThree.canceled += instance.OnAbilityThree;
-                @FlipCards.started += instance.OnFlipCards;
-                @FlipCards.performed += instance.OnFlipCards;
-                @FlipCards.canceled += instance.OnFlipCards;
+                @AbilityFour.started += instance.OnAbilityFour;
+                @AbilityFour.performed += instance.OnAbilityFour;
+                @AbilityFour.canceled += instance.OnAbilityFour;
             }
         }
     }
@@ -401,7 +401,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnAbilityOne(InputAction.CallbackContext context);
         void OnAbilityTwo(InputAction.CallbackContext context);
         void OnAbilityThree(InputAction.CallbackContext context);
-        void OnFlipCards(InputAction.CallbackContext context);
+        void OnAbilityFour(InputAction.CallbackContext context);
     }
     public interface IMouseCameraControlsActions
     {

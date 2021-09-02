@@ -7,15 +7,14 @@ namespace MovementPlayground.Card
 {
     public class PlayerHandManager : MonoBehaviour
     {
-        public List<Card> HandCardInfo;
+        public List<CardData> HandCardInfo;
         public List<GameObject> HandCardObjects;
+        public List<CardUISlot> CardSlots;
 
-        [SerializeField] List<UICardSlot> _cardSlots;
-
-        public bool AddCardToHand(Card cardToAdd, GameObject cardObject)
+        public bool AddCardToHand(CardData cardToAdd, GameObject cardObject)
         {
             // find the first unoccupied slot to put the new card in
-            UICardSlot targetSlot = _cardSlots.FirstOrDefault(x => !x.IsOccupied);
+            CardUISlot targetSlot = CardSlots.FirstOrDefault(x => !x.IsOccupied);
 
             // do we have room in hand for this card?
             if (targetSlot != null)
@@ -25,11 +24,12 @@ namespace MovementPlayground.Card
                 HandCardObjects.Add(cardObject);
 
                 targetSlot.IsOccupied = true;
+                targetSlot.ObjectDroppedInSlot = cardObject.GetComponent<CardDragDrop>();
                 cardObject.transform.position = targetSlot.transform.position;
                 cardObject.transform.SetParent(gameObject.transform);
                 
                 // now that the card is in hand, enable dragging and flip it face up
-                DragDrop dragDrop = cardObject.GetComponent<DragDrop>();
+                CardDragDrop dragDrop = cardObject.GetComponent<CardDragDrop>();
                 dragDrop.StartPos = cardObject.transform.position;
                 dragDrop.CurrentSlot = targetSlot.gameObject;
                 dragDrop.AllowDragging = true;
@@ -39,6 +39,24 @@ namespace MovementPlayground.Card
             }
             else
                 return false;
+        }
+
+        public void RemoveCardFromHand(CardUISlot slotWithCardToRemove)
+        {
+            // get game object of card being removed
+            GameObject cardObject = slotWithCardToRemove.ObjectDroppedInSlot.gameObject;
+
+            // remove card data from hand
+            HandCardInfo.Remove(cardObject.GetComponent<CardDisplay>().CardData);
+            HandCardObjects.Remove(cardObject);
+
+            // TODO: send card to discard pile before deleting data from hand
+
+            // for now destroy the object... later we will store in discard so we can just reuse the same object
+            Destroy(cardObject);
+
+            // remove card from slot
+            slotWithCardToRemove.RemoveCardFromSlot();
         }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace MovementPlayground.Card
 {
-    public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
+    public class CardDragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
         Canvas _canvas;
         CanvasGroup _canvasGroup;
@@ -33,7 +33,7 @@ namespace MovementPlayground.Card
         {
             if (AllowDragging)
             {
-                eventData.pointerDrag.GetComponent<DragDrop>().DroppedOnSlot = false;
+                eventData.pointerDrag.GetComponent<CardDragDrop>().DroppedOnSlot = false;
                 _canvasGroup.blocksRaycasts = false;
                 if (CurrentSlot != null)
                     SlotAtStartOfDrag = CurrentSlot;

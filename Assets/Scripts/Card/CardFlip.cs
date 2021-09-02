@@ -10,36 +10,12 @@ namespace MovementPlayground.Card
         [SerializeField]
         private GameObject _cardFront, _cardBack;
 
-        PlayerInput _playerInput;
-
         bool _coroutineAllowed, _isFaceUp;
-
-        private void Awake()
-        {
-            _playerInput = new PlayerInput();
-            _playerInput.CharacterControls.FlipCards.performed += StartCardFlip;
-        }
-
-        private void StartCardFlip(InputAction.CallbackContext obj)
-        {
-            if (_coroutineAllowed)
-                StartCoroutine(RotateCard());
-        }
 
         public void DrawFlip()
         {
             if (_coroutineAllowed)
                 StartCoroutine(RotateCard());
-        }
-
-        private void OnEnable()
-        {
-            _playerInput.CharacterControls.Enable();
-        }
-
-        private void OnDisable()
-        {
-            _playerInput.CharacterControls.Disable();
         }
 
         private void Start()
