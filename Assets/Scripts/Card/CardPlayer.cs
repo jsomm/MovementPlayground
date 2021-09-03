@@ -8,18 +8,16 @@ namespace MovementPlayground.Card
     {
         [SerializeField] PlayerHandManager _playerHand;
 
-        PlayerAnimationAndMovementController _playerController; // maybe need this?
         PlayerInput _playerInput;
 
         private void Awake()
         {
-            _playerController = GetComponent<PlayerAnimationAndMovementController>();
             _playerInput = new PlayerInput();
         }
 
         private void OnEnable()
         {
-            _playerInput.CharacterControls.Enable();
+            _playerInput.CharacterControls.Enable(); 
             _playerInput.CharacterControls.AbilityOne.performed += PlayCard;
             _playerInput.CharacterControls.AbilityTwo.performed += PlayCard;
             _playerInput.CharacterControls.AbilityThree.performed += PlayCard;
@@ -39,19 +37,7 @@ namespace MovementPlayground.Card
         {
             // determine the card slot we're playing from
             CardUISlot slotBeingPlayed = DetermineSlot(obj.action.name);
-
-            // if there's a card in the slot
-            if (slotBeingPlayed.IsOccupied)
-            {
-                // get info needed to play the card
-                CardData cardData = slotBeingPlayed.ObjectDroppedInSlot.GetComponent<CardDisplay>().CardData;
-
-                // play the card
-                print("Played " + cardData.Title + " for " + cardData.Cost + " resource. " + cardData.DescriptionText);
-
-                // remove the card from the hand
-                _playerHand.RemoveCardFromHand(slotBeingPlayed);
-            }
+            PlayCardInSlot(slotBeingPlayed);
         }
 
         private CardUISlot DetermineSlot(string actionName)
@@ -71,6 +57,23 @@ namespace MovementPlayground.Card
             }
 
             return null;
+        }
+
+        public void PlayCardInSlot(CardUISlot slotToPlay)
+        {
+            // if there's a card in the slot
+            if (slotToPlay.IsOccupied)
+            {
+                // get info needed to play the card
+                CardDisplay cardDisplay = slotToPlay.CardDisplay;
+                CardData cardData = cardDisplay.CardData;
+
+                // play the card
+                print("Played " + cardData.Title + " for " + cardData.Cost + " resource. " + cardData.DescriptionText);
+
+                // remove the card from the hand
+                _playerHand.RemoveCardFromCollection(cardDisplay);
+            }
         }
     }
 }

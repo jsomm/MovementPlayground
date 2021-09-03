@@ -7,6 +7,7 @@ namespace MovementPlayground.Card
     public class CardDisplay : MonoBehaviour
     {
         public CardData CardData;
+        public CardUISlot CurrentSlot;
 
         public TMP_Text TitleText, DescriptionText, ResourceCost;
         public Image CardArt;

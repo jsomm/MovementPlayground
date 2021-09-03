@@ -10,7 +10,7 @@ namespace MovementPlayground.Card
         RectTransform _rectTransform;
         public Vector2 StartPos;
         public bool DroppedOnSlot, AllowDragging;
-        public GameObject CurrentSlot, SlotAtStartOfDrag;
+        public CardUISlot CurrentSlot, SlotAtStartOfDrag;
 
         private void Awake()
         {

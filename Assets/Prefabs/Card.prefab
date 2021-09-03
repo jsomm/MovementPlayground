@@ -195,6 +195,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardFront: {fileID: 5297660377218800032}
   _cardBack: {fileID: 6570992594653900116}
+  CoroutineAllowed: 1
+  IsFaceUp: 0
 --- !u!114 &5228923235868994030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,6 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardData: {fileID: 0}
+  CurrentSlot: {fileID: 0}
   TitleText: {fileID: 8024851784014845842}
   DescriptionText: {fileID: 8024851784244051265}
   ResourceCost: {fileID: 8024851785683574035}

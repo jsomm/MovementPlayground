@@ -6,22 +6,25 @@ namespace MovementPlayground.Card
     public class CardUISlot : MonoBehaviour, IDropHandler
     {
         public bool IsOccupied = false;
-        public CardDragDrop ObjectDroppedInSlot;
+        public CardDragDrop DragDrop;
+        public CardDisplay CardDisplay;
 
         public void OnDrop(PointerEventData eventData)
         {
             if (eventData.pointerDrag != null)
             {
-                ObjectDroppedInSlot = eventData.pointerDrag.GetComponent<CardDragDrop>();
-                if (ObjectDroppedInSlot.AllowDragging)
+                DragDrop = eventData.pointerDrag.GetComponent<CardDragDrop>();
+                CardDisplay = eventData.pointerDrag.GetComponent<CardDisplay>();
+                CardDisplay.CurrentSlot = this;
+                if (DragDrop.AllowDragging)
                 {
-                    ObjectDroppedInSlot.DroppedOnSlot = true;
-                    ObjectDroppedInSlot.CurrentSlot = gameObject;
-                    ObjectDroppedInSlot.StartPos = transform.position;
+                    DragDrop.DroppedOnSlot = true;
+                    DragDrop.CurrentSlot = this;
+                    DragDrop.StartPos = transform.position;
                     eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
 
-                    if (ObjectDroppedInSlot.SlotAtStartOfDrag != null)
-                        ObjectDroppedInSlot.SlotAtStartOfDrag.GetComponent<CardUISlot>().IsOccupied = false;
+                    if (DragDrop.SlotAtStartOfDrag != null)
+                        DragDrop.SlotAtStartOfDrag.GetComponent<CardUISlot>().IsOccupied = false;
 
                     IsOccupied = true;
                 }
@@ -31,7 +34,8 @@ namespace MovementPlayground.Card
         public void RemoveCardFromSlot()
         {
             IsOccupied = false;
-            ObjectDroppedInSlot = null;
+            DragDrop = null;
+            CardDisplay = null;
         }
     }
 }
