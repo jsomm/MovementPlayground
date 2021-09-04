@@ -7,7 +7,7 @@ namespace MovementPlayground
     public class CardCreator
     {
 
-        public GameObject CreateCardObject(GameObject prefab, CardData cardData, Transform parent)
+        public GameObject CreateCardObject(GameObject prefab, CardBase cardData, Transform parent)
         {
             // create blank card
             GameObject newCard = GameObject.Instantiate(prefab, parent.position, Quaternion.identity, parent);

@@ -66,10 +66,11 @@ namespace MovementPlayground.Card
             {
                 // get info needed to play the card
                 CardDisplay cardDisplay = slotToPlay.CardDisplay;
-                CardData cardData = cardDisplay.CardData;
+                CardBase cardData = cardDisplay.CardData;
 
                 // play the card
                 print("Played " + cardData.Title + " for " + cardData.Cost + " resource. " + cardData.DescriptionText);
+                cardData.PlayCard(gameObject);
 
                 // remove the card from the hand
                 _playerHand.RemoveCardFromCollection(cardDisplay);

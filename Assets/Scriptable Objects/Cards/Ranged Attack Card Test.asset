@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db9c1db2d0b1d0c4aa5ccfab270949ad, type: 3}
-  m_Name: Fireball
+  m_Script: {fileID: 11500000, guid: c21d4616c09fe944f8c2204c415fef71, type: 3}
+  m_Name: Ranged Attack Card Test
   m_EditorClassIdentifier: 
-  Title: Fireball
-  DescriptionText: Throw a fireball!
-  Cost: 5
+  Title: Ranged Attack
+  DescriptionText: Ranged Attack Card Test
+  Cost: 2
   CardArt: {fileID: 21300000, guid: 4622c72801961084b942caad1cb99006, type: 3}
+  ProjectilePrefab: {fileID: 431284765066981327, guid: b2b2b0651a93acb46a93b6a5e2130d99, type: 3}
+  ProjectileSpeed: 100

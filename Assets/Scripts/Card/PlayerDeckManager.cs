@@ -25,7 +25,7 @@ namespace MovementPlayground.Card
             for (int i = 0; i < 10; i++)
             {
                 // make up some card data
-                CardData cardData = ScriptableObject.CreateInstance<CardData>();
+                CardBase cardData = ScriptableObject.CreateInstance<CardBase>();
                 cardData.Title = "Test Title " + i.ToString();
                 cardData.DescriptionText = "Test Desc " + i.ToString();
                 cardData.Cost = UnityEngine.Random.Range(1, 10);
@@ -56,9 +56,15 @@ namespace MovementPlayground.Card
 
         public void Draw(int numberOfCardsToDraw)
         {
-            // TODO: If there are still cards in the deck and the player wants more than that number of cards, this doesn't work!
             if(numberOfCardsToDraw > _cardDisplays.Count) // the player wants to draw more than we have in the deck
             {
+                if (_cardDisplays.Count > 0) // we still have cards for them to draw before we shuffle in the discard
+                {
+                    numberOfCardsToDraw -= _cardDisplays.Count;
+                    Draw(_cardDisplays.Count); // draw the rest in the deck                
+                }
+
+                // now shuffle in the discard pile
                 _cardDisplays = _playerDiscard.ReturnCardsToDeck();
                 Shuffle();
                 UpdateCardCount();

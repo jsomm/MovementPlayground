@@ -6,13 +6,13 @@ namespace MovementPlayground.Card
 {
     public class CardDisplay : MonoBehaviour
     {
-        public CardData CardData;
+        public CardBase CardData;
         public CardUISlot CurrentSlot;
 
         public TMP_Text TitleText, DescriptionText, ResourceCost;
         public Image CardArt;
 
-        public void SetCardData(CardData cardData)
+        public void SetCardData(CardBase cardData)
         {
             CardData = cardData;
             DisplayCardData();
