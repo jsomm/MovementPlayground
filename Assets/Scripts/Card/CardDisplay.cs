@@ -18,7 +18,7 @@ namespace MovementPlayground.Card
             DisplayCardData();
         }
 
-        private void DisplayCardData()
+        public void DisplayCardData()
         {
             TitleText.text = CardData.Title;
             DescriptionText.text = CardData.DescriptionText;

@@ -31,7 +31,7 @@ namespace MovementPlayground.Card
                 cardData.Cost = UnityEngine.Random.Range(1, 10);
 
                 // create a card with that data
-                GameObject newCard = cardCreator.CreateCardObject(_cardPrefab, cardData, _deckDataHolder);
+                GameObject newCard = cardCreator.CreateCardObject(_cardPrefab, _deckDataHolder);
 
                 // add data to collection
                 AddCardToCollection(newCard.GetComponent<CardDisplay>());

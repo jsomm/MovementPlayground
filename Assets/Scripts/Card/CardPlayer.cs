@@ -1,5 +1,7 @@
 using System;
 
+using MovementPlayground.ResourceBars;
+
 using UnityEngine;
 
 namespace MovementPlayground.Card
@@ -9,10 +11,12 @@ namespace MovementPlayground.Card
         [SerializeField] PlayerHandManager _playerHand;
 
         PlayerInput _playerInput;
+        ResourceBarManager _resourceBarManager;
 
         private void Awake()
         {
             _playerInput = new PlayerInput();
+            _resourceBarManager = GameObject.Find("Resource Bars").GetComponent<ResourceBarManager>();
         }
 
         private void OnEnable()
@@ -69,11 +73,17 @@ namespace MovementPlayground.Card
                 CardBase cardData = cardDisplay.CardData;
 
                 // play the card
-                print("Played " + cardData.Title + " for " + cardData.Cost + " resource. " + cardData.DescriptionText);
-                cardData.PlayCard(gameObject);
+                if (_resourceBarManager.CurrentMana >= cardData.Cost)
+                {
+                    print("Played " + cardData.Title + " for " + cardData.Cost + " resource. " + cardData.DescriptionText);
+                    _resourceBarManager.UseMana(cardData.Cost);
+                    cardData.PlayCard(gameObject);
 
-                // remove the card from the hand
-                _playerHand.RemoveCardFromCollection(cardDisplay);
+                    // remove the card from the hand
+                    _playerHand.RemoveCardFromCollection(cardDisplay);
+                }
+                else
+                    print("Not enough mana!");
             }
         }
     }
