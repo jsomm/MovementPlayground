@@ -8,6 +8,12 @@ namespace MovementPlayground.Card
 {
     public class CardPlayer : MonoBehaviour
     {
+        public delegate void StartPlayingCardAction(CardBase card); // not totally sure how to use these just yet.. the fact that they are staying in is just a reminder for me to get to work on this...
+        public static event StartPlayingCardAction OnStartPlayingCard;
+
+        public delegate void CardPlayedAction(CardBase card);
+        public static event CardPlayedAction OnCardPlayed;
+
         [SerializeField] PlayerHandManager _playerHand;
 
         PlayerInput _playerInput;
@@ -78,6 +84,7 @@ namespace MovementPlayground.Card
                     print("Played " + cardData.Title + " for " + cardData.Cost + " resource. " + cardData.DescriptionText);
                     _resourceBarManager.UseMana(cardData.Cost);
                     cardData.PlayCard(gameObject);
+                    OnCardPlayed.Invoke(cardData);
 
                     // remove the card from the hand
                     _playerHand.RemoveCardFromCollection(cardDisplay);

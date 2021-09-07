@@ -16,7 +16,7 @@ public class CameraMouseFollower : MonoBehaviour
         _cam = Camera.main;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         Ray ray = _cam.ScreenPointToRay(Mouse.current.position.ReadValue());
         if(Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, _groundMask))

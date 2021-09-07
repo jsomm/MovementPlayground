@@ -7,6 +7,13 @@ namespace MovementPlayground.Card
         public string Title, DescriptionText;
         public int Cost;
         public Sprite CardArt;
+        public CardIndicatorType IndicatorType;
+
+        public enum CardIndicatorType
+        {
+            Skillshot,
+            AOE
+        }
 
         public virtual void PlayCard(GameObject parent) { }
     }
