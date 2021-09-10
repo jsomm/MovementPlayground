@@ -7,33 +7,37 @@ namespace MovementPlayground.ResourceBars
         public int MaxHealth = 5;
         public int MaxMana = 10;
 
-        public int CurrentHealth, CurrentMana;
+        public int CurrentHealth { get { return HealthBar.CurrentResource; } }
+        public int CurrentMana { get { return ManaBar.CurrentResource; } }
 
         public ResourceBarBase HealthBar, ManaBar;
 
         private void Start()
         {
-            CurrentHealth = MaxHealth;
             HealthBar.SetMaxResource(MaxHealth);
-
-            CurrentMana = MaxMana;
             ManaBar.SetMaxResource(MaxMana);
         }
-        
-        public void TakeDamage(int damage)
+        public void TakeDamageButton(int delta)
         {
-            CurrentHealth -= damage;
-            CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
-
-            HealthBar.SetResource(CurrentHealth);
+            ChangeResource(HealthBar, delta);
         }
 
-        public void UseMana(int manaUsed)
+        public void UseManaButton(int delta)
         {
-            CurrentMana -= manaUsed;
-            CurrentMana = Mathf.Clamp(CurrentMana, 0, MaxMana);
+            ChangeResource(ManaBar, delta);
+        }
 
-            ManaBar.SetResource(CurrentMana);
+        public void ChangeResource(ResourceBarBase resourceBar, int delta)
+        {
+            int newResourceAmount = resourceBar.CurrentResource - delta;
+            newResourceAmount = Mathf.Clamp(newResourceAmount, 0, resourceBar.MaxResource);
+
+            resourceBar.SetResource(newResourceAmount);
+        }
+
+        public void RefillResource(ResourceBarBase resourceBarToRefill)
+        {
+            resourceBarToRefill.RefillResource();
         }
     }
 }

@@ -65,6 +65,14 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Left Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""6ff9b68a-1a91-4a6e-9498-760c7648f951"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -199,6 +207,17 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""action"": ""AbilityFour"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ec918d82-08a2-4988-bb94-34efbc6e45a1"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -240,6 +259,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_CharacterControls_AbilityTwo = m_CharacterControls.FindAction("AbilityTwo", throwIfNotFound: true);
         m_CharacterControls_AbilityThree = m_CharacterControls.FindAction("AbilityThree", throwIfNotFound: true);
         m_CharacterControls_AbilityFour = m_CharacterControls.FindAction("AbilityFour", throwIfNotFound: true);
+        m_CharacterControls_LeftClick = m_CharacterControls.FindAction("Left Click", throwIfNotFound: true);
         // MouseCameraControls
         m_MouseCameraControls = asset.FindActionMap("MouseCameraControls", throwIfNotFound: true);
         m_MouseCameraControls_Zoom = m_MouseCameraControls.FindAction("Zoom", throwIfNotFound: true);
@@ -298,6 +318,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_CharacterControls_AbilityTwo;
     private readonly InputAction m_CharacterControls_AbilityThree;
     private readonly InputAction m_CharacterControls_AbilityFour;
+    private readonly InputAction m_CharacterControls_LeftClick;
     public struct CharacterControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -308,6 +329,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @AbilityTwo => m_Wrapper.m_CharacterControls_AbilityTwo;
         public InputAction @AbilityThree => m_Wrapper.m_CharacterControls_AbilityThree;
         public InputAction @AbilityFour => m_Wrapper.m_CharacterControls_AbilityFour;
+        public InputAction @LeftClick => m_Wrapper.m_CharacterControls_LeftClick;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -335,6 +357,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @AbilityFour.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnAbilityFour;
                 @AbilityFour.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnAbilityFour;
                 @AbilityFour.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnAbilityFour;
+                @LeftClick.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnLeftClick;
+                @LeftClick.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnLeftClick;
+                @LeftClick.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnLeftClick;
             }
             m_Wrapper.m_CharacterControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -357,6 +382,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @AbilityFour.started += instance.OnAbilityFour;
                 @AbilityFour.performed += instance.OnAbilityFour;
                 @AbilityFour.canceled += instance.OnAbilityFour;
+                @LeftClick.started += instance.OnLeftClick;
+                @LeftClick.performed += instance.OnLeftClick;
+                @LeftClick.canceled += instance.OnLeftClick;
             }
         }
     }
@@ -402,6 +430,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnAbilityTwo(InputAction.CallbackContext context);
         void OnAbilityThree(InputAction.CallbackContext context);
         void OnAbilityFour(InputAction.CallbackContext context);
+        void OnLeftClick(InputAction.CallbackContext context);
     }
     public interface IMouseCameraControlsActions
     {

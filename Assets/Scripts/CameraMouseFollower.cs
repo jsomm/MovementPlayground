@@ -11,10 +11,7 @@ public class CameraMouseFollower : MonoBehaviour
 
     Camera _cam;
 
-    private void Awake()
-    {
-        _cam = Camera.main;
-    }
+    private void Awake() => _cam = Camera.main;
 
     private void LateUpdate()
     {

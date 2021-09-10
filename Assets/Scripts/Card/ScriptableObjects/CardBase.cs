@@ -7,6 +7,7 @@ namespace MovementPlayground.Card
         public string Title, DescriptionText;
         public int Cost;
         public Sprite CardArt;
+        public float RangeModifier = 1;
         public CardIndicatorType IndicatorType;
 
         public enum CardIndicatorType

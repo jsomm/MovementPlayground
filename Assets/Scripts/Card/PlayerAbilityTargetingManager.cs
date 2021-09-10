@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace MovementPlayground.Card
 {
-    public class PlayerAbilityTargettingManager : MonoBehaviour
+    public class PlayerAbilityTargetingManager : MonoBehaviour
     {
         public float RangeModifier = 1f;
 
@@ -14,33 +14,10 @@ namespace MovementPlayground.Card
         [SerializeField] Transform _aoeIndicatorTransform;
 
         Camera _cam;
-        PlayerInput _playerInput;
-        bool _isAiming = false;
+        Vector3[] _rangeBoundaries = new Vector3[4];
+        float _radiusOfRange;
 
-        private void Awake()
-        {
-            _cam = Camera.main;
-            _playerInput = new PlayerInput();
-        }
-
-        private void OnEnable()
-        {
-            CardPlayer.OnCardPlayed += CardPlayer_OnCardPlayed;
-        }
-
-        private void CardPlayer_OnCardPlayed(CardBase card)
-        {
-            switch (card.IndicatorType)
-            {
-                case CardBase.CardIndicatorType.Skillshot:
-                    ShowSkillshot(true);
-                    break;
-                case CardBase.CardIndicatorType.AOE:
-                    ShowAOE(true);
-                    ShowRange(true);
-                    break;
-            }
-        }
+        private void Awake() => _cam = Camera.main;
 
         private void Start()
         {
@@ -50,7 +27,9 @@ namespace MovementPlayground.Card
             _aoeIndicatorTransform.gameObject.SetActive(false);
             _rangeIndicatorImage.gameObject.SetActive(false);
 
-            // subscribe to card play started event
+            // do these calculations in start, as they only need to be done one time
+            _rangeIndicatorImage.rectTransform.GetWorldCorners(_rangeBoundaries);
+            _radiusOfRange = Vector3.Distance(_rangeBoundaries[0], _rangeBoundaries[1]) / 2; // gets distance from center to outer edge of range image
 
         }
 
@@ -67,17 +46,36 @@ namespace MovementPlayground.Card
                 #endregion
 
                 #region AOE
-                Vector3[] rangeBoundaries = new Vector3[4];
-                _rangeIndicatorImage.rectTransform.GetWorldCorners(rangeBoundaries);
-                float radiusOfRange = Vector3.Distance(rangeBoundaries[0], rangeBoundaries[1]) / 2; // gets distance from center to outer edge of range image
-
                 Vector3 direction = (hitInfo.point - transform.position).normalized;
-                float distance = Mathf.Clamp(Vector3.Distance(hitInfo.point, transform.position), 0, radiusOfRange);
+                float distance = Mathf.Clamp(Vector3.Distance(hitInfo.point, transform.position), 0, _radiusOfRange);
                 Vector3 targetPosition = transform.position + direction * distance;
 
                 _aoeIndicatorTransform.position = targetPosition;
                 #endregion
             }
+        }
+
+        public void ShowIndicatorForCard(CardBase card)
+        {
+            ScaleRange(card.RangeModifier);
+            switch (card.IndicatorType)
+            {
+                case CardBase.CardIndicatorType.Skillshot:
+                    ShowSkillshot(true);
+                    break;
+
+                case CardBase.CardIndicatorType.AOE:
+                    ShowAOE(true);
+                    ShowRange(true);
+                    break;
+            }
+        }
+
+        public void HideIndicators()
+        {
+            ShowSkillshot(false);
+            ShowAOE(false);
+            ShowRange(false);
         }
 
         private void ScaleRange(float rangeModifier)

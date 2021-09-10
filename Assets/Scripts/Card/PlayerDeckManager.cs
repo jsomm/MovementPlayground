@@ -10,28 +10,48 @@ namespace MovementPlayground.Card
     public class PlayerDeckManager : CardCollectionBase
     {
         [SerializeField] List<CardDisplay> _cardDisplays;
-        [SerializeField] GameObject _cardPrefab;
+        [SerializeField] List<GameObject> _cardPrefabs;
         [SerializeField] Transform _deckDataHolder;
         [SerializeField] TMP_Text _deckCountText;
 
         [SerializeField] PlayerHandManager _playerHand;
         [SerializeField] PlayerDiscardManager _playerDiscard;
 
-        private void Start() => BuildTestDeck();
+        System.Random _rng;
+
+        private void Start()
+        {
+            _rng = new System.Random();
+            BuildTestDeck();
+        }
 
         void BuildTestDeck()
         {
             CardCreator cardCreator = new CardCreator();
+            int remainder = 10 % _cardPrefabs.Count;
+            int numOfEachCard = 10 / _cardPrefabs.Count;
+            int numCreated = 0;
+            int currentCardIndex = 0;
+
+            // create a ten card deck out of the cards in _cardPrefabs
             for (int i = 0; i < 10; i++)
             {
-                // make up some card data
-                CardBase cardData = ScriptableObject.CreateInstance<CardBase>();
-                cardData.Title = "Test Title " + i.ToString();
-                cardData.DescriptionText = "Test Desc " + i.ToString();
-                cardData.Cost = UnityEngine.Random.Range(1, 10);
+                GameObject newCard;
 
-                // create a card with that data
-                GameObject newCard = cardCreator.CreateCardObject(_cardPrefab, _deckDataHolder);
+                // make the remainders first
+                if (i < remainder)
+                    newCard = cardCreator.CreateCardObject(_cardPrefabs[_rng.Next(_cardPrefabs.Count)], _deckDataHolder); // remainders will just be randomized from all available cards
+                else
+                {
+                    if(numCreated != numOfEachCard)                    
+                        numCreated++;                    
+                    else
+                    {
+                        numCreated = 0;
+                        currentCardIndex++;
+                    }
+                    newCard = cardCreator.CreateCardObject(_cardPrefabs[currentCardIndex], _deckDataHolder);
+                }
 
                 // add data to collection
                 AddCardToCollection(newCard.GetComponent<CardDisplay>());
@@ -42,12 +62,11 @@ namespace MovementPlayground.Card
 
         public void Shuffle()
         {
-            System.Random rng = new System.Random();
             int n = _cardDisplays.Count;
             while (n > 1)
             {
                 n--;
-                int k = rng.Next(n + 1);
+                int k = _rng.Next(n + 1);
                 CardDisplay value = _cardDisplays[k];
                 _cardDisplays[k] = _cardDisplays[n];
                 _cardDisplays[n] = value;
