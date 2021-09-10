@@ -3,6 +3,7 @@ using System;
 using MovementPlayground.ResourceBars;
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace MovementPlayground.Card.CardPlayer
 {
@@ -14,10 +15,14 @@ namespace MovementPlayground.Card.CardPlayer
         public ResourceBarManager ResourceBarManager;
         public PlayerAbilityTargetingManager TargetingManager;
         public CardPlayArea CardPlayArea;
-        public CardUISlot LastSlotPressed;        
+        public CardUISlot LastSlotPressed;
+        public Transform ProjectileOrigin;
+
+        Camera _cam;
 
         private void Awake()
         {
+            _cam = Camera.main;
             _playerInput = new PlayerInput();
             ResourceBarManager = GameObject.Find("Resource Bars").GetComponent<ResourceBarManager>();
             SetState(new Gameplay(this));

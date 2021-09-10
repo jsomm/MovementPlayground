@@ -19,4 +19,4 @@ MonoBehaviour:
   RangeModifier: 1
   IndicatorType: 0
   ProjectilePrefab: {fileID: 431284765066981327, guid: b2b2b0651a93acb46a93b6a5e2130d99, type: 3}
-  ProjectileSpeed: 100
+  ProjectileSpeed: 30

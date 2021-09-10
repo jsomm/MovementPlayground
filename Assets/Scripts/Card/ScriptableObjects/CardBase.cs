@@ -16,6 +16,6 @@ namespace MovementPlayground.Card
             AOE
         }
 
-        public virtual void PlayCard(GameObject parent) { }
+        public virtual void PlayCard(CardPlayer.CardPlayer cardPlayer) { }
     }
 }

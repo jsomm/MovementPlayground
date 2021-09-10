@@ -65,10 +65,12 @@ namespace MovementPlayground.Card.CardPlayer
         {
             // get info needed to play the card
             CardBase cardData = CardPlayer.LastSlotPressed.CardDisplay.CardData;
-            // play the card
-            Debug.Log("Played " + cardData.Title + " for " + cardData.Cost + " resource. " + cardData.DescriptionText);
+
+            // use mana
             CardPlayer.ResourceBarManager.ChangeResource(CardPlayer.ResourceBarManager.ManaBar, cardData.Cost);
-            cardData.PlayCard(CardPlayer.gameObject);
+
+            // play the card
+            cardData.PlayCard(CardPlayer);
 
             // remove the card from the hand
             CardPlayer.PlayerHand.RemoveCardFromCollection(CardPlayer.LastSlotPressed.CardDisplay);

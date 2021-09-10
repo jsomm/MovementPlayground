@@ -13,6 +13,8 @@ namespace MovementPlayground.Card
         [SerializeField] Image _skillshotImage, _rangeIndicatorImage;
         [SerializeField] Transform _aoeIndicatorTransform;
 
+        public Transform AoeIndicatorTransform { get { return _aoeIndicatorTransform; } }
+
         Camera _cam;
         Vector3[] _rangeBoundaries = new Vector3[4];
         float _radiusOfRange;
