@@ -11,18 +11,18 @@ namespace MovementPlayground.Card.CardPlayer
     {
         PlayerInput _playerInput;
 
-        public PlayerHandManager PlayerHand;
+        public PlayerHandManager PlayerHandManager;
         public ResourceBarManager ResourceBarManager;
         public PlayerAbilityTargetingManager TargetingManager;
         public CardPlayArea CardPlayArea;
-        public CardUISlot LastSlotPressed;
         public Transform ProjectileOrigin;
 
-        Camera _cam;
+        private CardUISlot _lastSlotPressed;
+
+        public CardUISlot LastSlotPressed { get => _lastSlotPressed; set => _lastSlotPressed = value; }
 
         private void Awake()
         {
-            _cam = Camera.main;
             _playerInput = new PlayerInput();
             ResourceBarManager = GameObject.Find("Resource Bars").GetComponent<ResourceBarManager>();
             SetState(new Gameplay(this));
@@ -38,7 +38,6 @@ namespace MovementPlayground.Card.CardPlayer
             _playerInput.CharacterControls.LeftClick.performed += HandleMouseClicked;
         }
 
-
         private void OnDisable()
         {
             _playerInput.CharacterControls.Disable();
@@ -49,28 +48,22 @@ namespace MovementPlayground.Card.CardPlayer
             _playerInput.CharacterControls.LeftClick.performed -= HandleMouseClicked;
         }
 
-        private void HandleAbilityButtonPressed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-        {
-            State.AbilityButtonPressed(obj);
-        }
+        private void HandleAbilityButtonPressed(UnityEngine.InputSystem.InputAction.CallbackContext obj) => State.AbilityButtonPressed(obj);
 
-        private void HandleMouseClicked(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-        {
-            State.MouseClicked(obj);
-        }
+        private void HandleMouseClicked(UnityEngine.InputSystem.InputAction.CallbackContext obj) => State.MouseClicked(obj);
 
         public CardUISlot DetermineSlotFromKeybindName(string actionName)
         {
             switch (actionName)
             {
                 case "AbilityOne":
-                    return PlayerHand.CardSlots[0];
+                    return PlayerHandManager.CardSlots[0];
                 case "AbilityTwo":
-                    return PlayerHand.CardSlots[1];
+                    return PlayerHandManager.CardSlots[1];
                 case "AbilityThree":
-                    return PlayerHand.CardSlots[2];
+                    return PlayerHandManager.CardSlots[2];
                 case "AbilityFour":
-                    return PlayerHand.CardSlots[3];
+                    return PlayerHandManager.CardSlots[3];
                 default:
                     break;
             }

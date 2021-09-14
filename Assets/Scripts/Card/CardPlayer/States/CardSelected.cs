@@ -1,7 +1,3 @@
-using System;
-
-using MovementPlayground.ResourceBars;
-
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -73,8 +69,7 @@ namespace MovementPlayground.Card.CardPlayer
             cardData.PlayCard(CardPlayer);
 
             // remove the card from the hand
-            CardPlayer.PlayerHand.RemoveCardFromCollection(CardPlayer.LastSlotPressed.CardDisplay);
+            CardPlayer.PlayerHandManager.RemoveCardFromCollection(CardPlayer.LastSlotPressed.CardDisplay);
         }
-
     }
 }
