@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 
 using Mirror;
 
@@ -7,16 +6,21 @@ using UnityEngine;
 
 namespace MovementPlayground
 {
-    class PlayerMovementController : NetworkBehaviour
+    class PlayerLocomotion : NetworkBehaviour
     {
-        [SerializeField] private float _movementSpeed = 5f;
+        [SerializeField] float _movementSpeed = 5f;
 
-        private CharacterController _characterController;
-        private Vector3 _previousInput;
+        CharacterController _characterController = null;
+        Animator _animator = null;
+
+        // hashes for animator values
+        int _isRunningHash;
+
+        Vector3 _previousInput;
         bool _isMovementPressed = false;
 
-        private PlayerInput _inputActions;
-        private PlayerInput InputActions
+        PlayerInput _inputActions;
+        PlayerInput InputActions
         {
             get
             {
@@ -34,7 +38,13 @@ namespace MovementPlayground
         }
 
         [ClientCallback]
-        private void Awake() => _characterController = GetComponent<CharacterController>();
+        private void Awake()
+        {
+            _characterController = GetComponent<CharacterController>();
+            _animator = GetComponent<Animator>();
+
+            _isRunningHash = Animator.StringToHash("isRunning");
+        }
 
         [ClientCallback]
         private void OnEnable() => InputActions.Enable();
@@ -43,7 +53,13 @@ namespace MovementPlayground
         private void OnDisable() => InputActions.Disable();
 
         [ClientCallback]
-        private void Update() => Move();
+        private void Update()
+        {
+            if (!hasAuthority)
+                return;
+
+            Move();
+        }
 
         [Client]
         private void SetMovement(Vector2 movement)
@@ -63,7 +79,11 @@ namespace MovementPlayground
         {
             _characterController.Move(_previousInput * _movementSpeed * Time.deltaTime);
             if (_isMovementPressed)
+            {
                 HandleRotation();
+            }
+
+            HandleAnimation();
         }
 
         private void HandleRotation()
@@ -78,6 +98,12 @@ namespace MovementPlayground
             Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
 
             transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, 15f * Time.deltaTime); // change '15f' to adjust how quickly the player rotates
+        }
+
+        private void HandleAnimation()
+        {
+            // more complicated move animations could go here, but this is all we need for now
+            _animator.SetBool(_isRunningHash, _isMovementPressed);
         }
     }
 }
